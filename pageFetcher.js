@@ -1,3 +1,10 @@
+const args = process.argv.slice (2)
+
+//node requestExample.js https://example.edu ./content.txt
+
+
+console.log (args)
+
 const request = require('request');
 const fs = require('fs');
 
@@ -7,9 +14,12 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+//node requestExample.js https://example.edu ./content.txt
 
+//https://example.edu/
+//path is './content.txt'
 
-request('https://example.edu/', (error, response, body) => {
+request(args[0], (error, response, body) => {
   console.log('error:', error); // Print the error if one occurred
   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   console.log('body:', body); // Print the HTML for the Google homepage.
@@ -21,7 +31,7 @@ request('https://example.edu/', (error, response, body) => {
     process.exit()
   }
 
-  fs.access('./content/content.text', fs.F_OK, (err) => {
+  fs.access(args[1], fs.F_OK, (err) => {
     if (err) {
       console.error(err)
       process.exit()
@@ -46,7 +56,7 @@ request('https://example.edu/', (error, response, body) => {
         } else if (answer === 'n') {
           console.log('Not overwriting content')
         }
-        
+
         rl.close();
       })
     }
